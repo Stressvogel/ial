@@ -32,7 +32,7 @@ public:
      * @param priority  Interrupt priority. Een hogere waarde = een lagere prioriteit.
      * @param callback  De functie die zal worden aangeroepen wanneer de button ingedrukt/losgelaten wordt.
      **/
-    virtual void ial_register_button_callback(uint8_t button_id = 0, uint8_t priority = 0, ial_button_cb callback) = 0;
+    virtual void ial_register_button_callback(uint8_t button_id = 0, uint8_t priority = 0, ial_button_cb callback = nullptr) = 0;
 
 };
 
