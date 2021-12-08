@@ -16,6 +16,9 @@ extern "C" {
 void __interrupt_handler(void);
 }
 
+/**
+ * Een interne struct die de info over een geregistreerde callback bijhoudt.
+ **/
 struct __callback {
 	uint8_t button_id, priority;
 	ial::ial_button_cb function;
@@ -27,6 +30,9 @@ struct __callback {
  **/
 class ial_de2_115 : public ial {
 private:
+	/**
+	 * Een lijst met alle geregistreerde callbacks.
+	 **/
 	std::vector<__callback *> callbacks;
 
 public:
