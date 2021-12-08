@@ -18,7 +18,8 @@ void __interrupt_handler(void);
 
 struct __callback {
 	uint8_t button_id, priority;
-	ial::ial_button_cb callback;
+	ial::ial_button_cb function;
+	void *user_data;
 };
 
 /**
@@ -46,7 +47,7 @@ public:
     /**
      * @inheritDoc
      **/
-    void ial_register_button_callback(uint8_t button_id, uint8_t priority, ial_button_cb callback);
+    void ial_register_button_callback(uint8_t button_id, uint8_t priority, ial_button_cb callback, void *cb_user_data);
 
 };
 

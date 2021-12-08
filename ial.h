@@ -15,7 +15,7 @@
  **/
 class ial {
 public:
-	typedef void (*ial_button_cb)(bool is_pressed);
+	typedef void (*ial_button_cb)(bool is_pressed, void *user_data);
 
 	ial() = default;
 
@@ -42,7 +42,7 @@ public:
      * @param priority  Interrupt priority. Een hogere waarde = een lagere prioriteit.
      * @param callback  De functie die zal worden aangeroepen wanneer de button ingedrukt/losgelaten wordt.
      **/
-    virtual void ial_register_button_callback(uint8_t button_id = 0, uint8_t priority = 0, ial_button_cb callback = nullptr) = 0;
+    virtual void ial_register_button_callback(uint8_t button_id = 0, uint8_t priority = 0, ial_button_cb callback = nullptr, void *cb_user_data = nullptr) = 0;
 
 };
 
