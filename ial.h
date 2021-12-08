@@ -17,13 +17,23 @@ class ial {
 public:
 	typedef void (*ial_button_cb)(bool is_pressed);
 
-	virtual ~ial();
+	ial() = default;
+
+	virtual ~ial() = default;
 
 	/**
 	 * Init functie.
 	 * Wordt aangeroepen zodra het invoerapparaat moet worden geinitialiseerd.
 	 **/
     virtual void ial_init() = 0;
+
+    /**
+     * Check of het device nieuwe informatie heeft.
+     *
+     * Is alleen nodig als het device niet met interrupts werkt.
+     * Als het device met interrupts werkt is het aanroepen van deze functie een NOOP.
+     **/
+    virtual void ial_poll() = 0;
 
     /**
      * Registreer een callback die moet worden uitgevoerd wanneer een button ingedrukt wordt.
