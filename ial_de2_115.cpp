@@ -51,10 +51,8 @@ void ial_de2_115::ial_poll() {
 /**
  * @inheritDoc
  **/
-void ial_de2_115::ial_register_button_callback(uint8_t button_id, uint8_t priority, ial::ial_button_cb callback, void *cb_user_data) {
+void ial_de2_115::ial_register_button_callback(uint8_t, uint8_t, ial::ial_button_cb callback, void *cb_user_data) {
 	__callback *cb = new __callback();
-	cb->button_id = button_id;
-	cb->priority = priority;
 	cb->function = callback;
 	cb->user_data = cb_user_data;
 
