@@ -10,7 +10,8 @@
 #include <cstdio>
 #include <system.h>
 
-#define SCAN_CODE_RANGE_START 0x29
+#define SCAN_CODE_RANGE_START	0x29
+#define SCAN_CODE_KEY_RELEASED	0xC7
 
 ial_ps2::ial_ps2() : ial() {}
 
@@ -37,12 +38,21 @@ void ial_ps2::ial_poll() {
 	unsigned char buf = 0;
 	// check of (en hoe vaak) er een button ingedrukt is
 	while (!alt_up_ps2_read_data_byte(this->usb_dev, &buf)) {
+		// check bij elke callback of hij deze button geregistreerd heeft
 		for (__callback *cb : this->callbacks) {
+			// block zolang de button ingedrukt is
+			if ((buf - SCAN_CODE_RANGE_START) == SCAN_CODE_KEY_RELEASED) {
+				cb->is_pressed = false;
+			}
+
+			if (cb->is_pressed) return;
+
 			// als de callback deze button geregistreerd heeft, call dan de function
 			if ((buf - SCAN_CODE_RANGE_START) == cb->button_id) {
 				// simuleer press en release
 				cb->function(true, cb->user_data);
 				cb->function(false, cb->user_data);
+				cb->is_pressed = true;
 			}
 		}
 	}

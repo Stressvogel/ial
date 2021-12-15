@@ -21,6 +21,7 @@ struct __callback {
 	uint8_t button_id;
 	ial::ial_button_cb function;
 	void *user_data;
+	bool is_pressed;
 };
 
 /**
