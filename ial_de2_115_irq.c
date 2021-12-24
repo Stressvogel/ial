@@ -42,7 +42,7 @@ void __ial_button_irq_init(void) {
 
 	// schakel interrupt in voor button 1
 	IOWR_ALTERA_AVALON_PIO_IRQ_MASK(PUSHBUTTONS_BASE, 1);
-	// interrupt zodra button gereleased wordt
+	// clear alle 'pending' interrupts
 	IOWR_ALTERA_AVALON_PIO_EDGE_CAP(PUSHBUTTONS_BASE, 1);
 
 	// registreer de interrupt service handler

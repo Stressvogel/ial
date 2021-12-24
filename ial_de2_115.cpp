@@ -56,5 +56,6 @@ void ial_de2_115::ial_register_button_callback(uint8_t, uint8_t, ial::ial_button
 	cb->function = callback;
 	cb->user_data = cb_user_data;
 
+	// voeg deze callback to aan de callbacks list
 	this->callbacks.push_back(cb);
 }
