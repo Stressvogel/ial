@@ -1,7 +1,7 @@
 /*
- * ial_de2_115_irq.c
+ * ial_device_de2_115_irq.c
  *
- * We hebben deze code gescheiden gehouden van ial_de2_115.cpp
+ * We hebben deze code gescheiden gehouden van ial_device_de2_115.cpp
  * omdat het anders onoverzichtelijk werd
  * en we dan "extern 'C' {}" enzo moesten gebruiken.
  *
