@@ -5,14 +5,9 @@
  *      Author: Matthijs Bakker
  */
 
-#include "ial_de2_115.h"
-
 #include <cstdio>
 #include <system.h>
-
-ial_de2_115::ial_de2_115() : ial() {}
-
-ial_de2_115::~ial_de2_115() {}
+#include "ial_device_de2_115.h"
 
 /**
  * Counter die wordt verhoogd zodra de button losgelaten is
@@ -24,10 +19,16 @@ volatile int __ial_button_pending = 0;
  **/
 extern "C" void __ial_button_irq_init(void);
 
+namespace ial {
+
+device_de2_115::device_de2_115() : device() {}
+
+device_de2_115::~device_de2_115() {}
+
 /**
  * @inheritDoc
  **/
-void ial_de2_115::ial_init() {
+void device_de2_115::init() {
 	// zie pagina 47 van de DE2-115 computer manual
 	__ial_button_irq_init();
 }
@@ -35,7 +36,7 @@ void ial_de2_115::ial_init() {
 /**
  * @inheritDoc
  **/
-void ial_de2_115::ial_poll() {
+void device_de2_115::poll() {
 	if (__ial_button_pending) {
 		while (__ial_button_pending > 0) {
 			for (__callback *cb : this->callbacks) {
@@ -51,7 +52,7 @@ void ial_de2_115::ial_poll() {
 /**
  * @inheritDoc
  **/
-void ial_de2_115::ial_register_button_callback(uint8_t, uint8_t, ial::ial_button_cb callback, void *cb_user_data) {
+void device_de2_115::register_button_callback(uint8_t, uint8_t, ial::button_cb callback, void *cb_user_data) {
 	__callback *cb = new __callback();
 	cb->function = callback;
 	cb->user_data = cb_user_data;
@@ -59,3 +60,5 @@ void ial_de2_115::ial_register_button_callback(uint8_t, uint8_t, ial::ial_button
 	// voeg deze callback to aan de callbacks list
 	this->callbacks.push_back(cb);
 }
+
+} // namespace ial

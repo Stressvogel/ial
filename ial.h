@@ -1,50 +1,20 @@
 /*
  * ial.h
  *
- *  Created on: Dec 3, 2021
+ *  Created on: Jan 11, 2022
  *      Author: Matthijs Bakker
  */
 
-#ifndef SOFTWARE_IAL_H
-#define SOFTWARE_IAL_H
+#ifndef LIBRARY_IAL_IAL_H_
+#define LIBRARY_IAL_IAL_H_
 
-#include <cstdint>
+namespace ial {
 
 /**
- * Een generic invoerapparaat
+ * Een template voor een functie die button callback data kan accepteren.
  **/
-class ial {
-public:
-	typedef void (*ial_button_cb)(bool is_pressed, void *user_data);
+typedef void (*button_cb)(bool is_pressed, void *user_data);
 
-	ial() = default;
+} // namespace ial
 
-	virtual ~ial() = default;
-
-	/**
-	 * Init functie.<br />
-	 * Wordt aangeroepen zodra het invoerapparaat moet worden geinitialiseerd.
-	 **/
-    virtual void ial_init() = 0;
-
-    /**
-     * Check of het device nieuwe informatie heeft.<br />
-     * <br />
-     * Is alleen nodig als het device niet met interrupts werkt.<br />
-     * Als het device met interrupts werkt is het aanroepen van deze functie een NOOP.
-     **/
-    virtual void ial_poll() = 0;
-
-    /**
-     * Registreer een callback die moet worden uitgevoerd wanneer een button ingedrukt wordt.
-     *
-     * @param button_id		Implementatie-specifieke button ID (bijv. de FPGA implementatie zal voor waarde 0 de KEY[0] gebruiken)
-     * @param priority		Interrupt priority. Een hogere waarde = een lagere prioriteit.
-     * @param callback		De functie die zal worden aangeroepen wanneer de button ingedrukt/losgelaten wordt.
-     * @param cb_user_data	Een willekeurige data pointer die de user kan meegeven naar de callback
-     **/
-    virtual void ial_register_button_callback(uint8_t button_id = 0, uint8_t priority = 0, ial_button_cb callback = nullptr, void *cb_user_data = nullptr) = 0;
-
-};
-
-#endif //SOFTWARE_IAL_H
+#endif /* LIBRARY_IAL_IAL_H_ */

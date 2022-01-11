@@ -1,14 +1,13 @@
 /*
- * ial_ps2.cpp
+ * ial_device_ps2.cpp
  *
  *  Created on: Dec 10, 2021
  *      Author: Matthijs Bakker
  */
 
-#include "ial_ps2.h"
-
 #include <cstdio>
 #include <system.h>
+#include "ial_device_ps2.h"
 
 #define SCAN_CODE_RANGE_START	0x29
 #define SCAN_CODE_KEY_RELEASED	(0xF0 - SCAN_CODE_RANGE_START) // 0xC7
@@ -21,14 +20,16 @@
 #define __PS2_PORT_NAME PS2_PORT_NAME
 #endif
 
-ial_ps2::ial_ps2() : ial() {}
+namespace ial {
 
-ial_ps2::~ial_ps2() {}
+device_ps2::device_ps2() : device() {}
+
+device_ps2::~device_ps2() {}
 
 /**
  * @inheritDoc
  **/
-void ial_ps2::ial_init() {
+void device_ps2::init() {
 	this->usb_dev = alt_up_ps2_open_dev(__PS2_PORT_NAME);
 	alt_up_ps2_init(this->usb_dev);
 
@@ -42,7 +43,7 @@ void ial_ps2::ial_init() {
 /**
  * @inheritDoc
  **/
-void ial_ps2::ial_poll() {
+void device_ps2::poll() {
 	unsigned char buf = 0;
 
 	// check of (en hoe vaak) er een button ingedrukt is
@@ -82,7 +83,7 @@ void ial_ps2::ial_poll() {
 /**
  * @inheritDoc
  **/
-void ial_ps2::ial_register_button_callback(uint8_t button_id, uint8_t, ial::ial_button_cb callback, void *cb_user_data) {
+void device_ps2::register_button_callback(uint8_t button_id, uint8_t, ial::button_cb callback, void *cb_user_data) {
 	__callback *cb = new __callback();
 	cb->button_id = button_id;
 	cb->function = callback;
@@ -91,3 +92,5 @@ void ial_ps2::ial_register_button_callback(uint8_t button_id, uint8_t, ial::ial_
 	// voeg deze callback to aan de callbacks list
 	this->callbacks.push_back(cb);
 }
+
+} // namespace ial
