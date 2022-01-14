@@ -1,17 +1,21 @@
 /*
- * ial_ps2.h
+ * ial_device_ps2.h
  *
- *  Created on: Dec 10, 2021
- *      Author: Matthijs Bakker
+ * Omschrijving:	PS/2 toetsenbord driver
+ * Hoofdauteur:		Matthijs Bakker
+ *
+ * Project Stressvogel
+ * Computer Engineering
+ * Windesheim, 2021-2022
  */
 
 #ifndef SOFTWARE_IAL_DEVICE_PS2_H_
 #define SOFTWARE_IAL_DEVICE_PS2_H_
 
 #include <vector>
-#include <altera_up_avalon_ps2.h>
-#include <altera_up_ps2_keyboard.h>
 
+#include "altera_up_avalon_ps2.h"
+#include "altera_up_ps2_keyboard.h"
 #include "ial_device.h"
 
 /**
@@ -48,24 +52,25 @@ public:
 	/**
 	 * @inheritDoc
 	 **/
-    void init();
+	void init();
 
-    /**
-     * @inheritDoc
-     **/
-    void poll();
+	/**
+	 * @inheritDoc
+	 **/
+	void poll();
 
-    /**
-     * @inheritDoc
-     *
-     * De button ID is de scancode - 0x29<br />
-     * <br />
-     * Wij gebruiken <b>priority</b> niet
-     **/
-    void register_button_callback(uint8_t button_id, uint8_t priority, ial::button_cb callback, void *cb_user_data);
+	/**
+	 * @inheritDoc
+	 *
+	 * De button ID is de scancode - 0x29<br />
+	 * <br />
+	 * Wij gebruiken <b>priority</b> niet
+	 **/
+	void register_button_callback(uint8_t button_id, uint8_t priority, ial::button_cb callback, void *cb_user_data);
 
 };
 
 } // namespace ial
 
 #endif /* SOFTWARE_IAL_DEVICE_PS2_H_ */
+

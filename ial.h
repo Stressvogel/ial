@@ -1,12 +1,16 @@
 /*
  * ial.h
  *
- *  Created on: Jan 11, 2022
- *      Author: Matthijs Bakker
+ * Omschrijving:	Diverse type definities
+ * Hoofdauteur:		Matthijs Bakker
+ *
+ * Project Stressvogel
+ * Computer Engineering
+ * Windesheim, 2021-2022
  */
 
-#ifndef LIBRARY_IAL_IAL_H_
-#define LIBRARY_IAL_IAL_H_
+#ifndef SOFTWARE_IAL_IAL_H_
+#define SOFTWARE_IAL_IAL_H_
 
 namespace ial {
 
@@ -17,4 +21,5 @@ typedef void (*button_cb)(bool is_pressed, void *user_data);
 
 } // namespace ial
 
-#endif /* LIBRARY_IAL_IAL_H_ */
+#endif /* SOFTWARE_IAL_IAL_H_ */
+

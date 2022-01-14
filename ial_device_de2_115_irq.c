@@ -1,12 +1,15 @@
 /*
  * ial_device_de2_115_irq.c
  *
- * We hebben deze code gescheiden gehouden van ial_device_de2_115.cpp
- * omdat het anders onoverzichtelijk werd
- * en we dan "extern 'C' {}" enzo moesten gebruiken.
+ * Omschrijving:	We hebben deze code gescheiden gehouden van
+ *			ial_device_de2_115.cpp omdat het anders te
+ *			onoverzichtelijk werd en we dan overal
+ *			"extern 'C' {}" zouden moeten gebruiken.:wq
+ * Hoofdauteur:		Matthijs Bakker
  *
- *  Created on: Dec 8, 2021
- *      Author: Matthijs Bakker
+ * Project Stressvogel
+ * Computer Engineering
+ * Windesheim, 2021-2022
  */
 
 #include "altera_avalon_pio_regs.h"

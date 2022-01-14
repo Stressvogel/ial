@@ -1,16 +1,21 @@
 /*
- * ial_de2_115.cpp
+ * ial_device_de2_115.cpp
  *
- *  Created on: Dec 3, 2021
- *      Author: Matthijs Bakker
+ * Omschrijving:	Diverse type definities
+ * Hoofdauteur:		Matthijs Bakker
+ *
+ * Project Stressvogel
+ * Computer Engineering
+ * Windesheim, 2021-2022
  */
 
 #include <cstdio>
 #include <system.h>
+
 #include "ial_device_de2_115.h"
 
 /**
- * Counter die wordt verhoogd zodra de button losgelaten is
+ * Counter die wordt verhoogd zodra de button wordt losgelaten
  **/
 volatile int __ial_button_pending = 0;
 
@@ -38,13 +43,13 @@ void device_de2_115::init() {
  **/
 void device_de2_115::poll() {
 	if (__ial_button_pending) {
-		while (__ial_button_pending > 0) {
+		while (__ial_button_pending-- > 0) {
+			// Loop door de callbacks heen
 			for (__callback *cb : this->callbacks) {
 				// simuleer press en release
 				cb->function(true, cb->user_data);
 				cb->function(false, cb->user_data);
 			}
-			--__ial_button_pending;
 		}
 	}
 }
@@ -52,7 +57,7 @@ void device_de2_115::poll() {
 /**
  * @inheritDoc
  **/
-void device_de2_115::register_button_callback(uint8_t, uint8_t, ial::button_cb callback, void *cb_user_data) {
+void device_de2_115::register_button_callback(uint8_t /*button_id*/, uint8_t /*priority*/, ial::button_cb callback, void *cb_user_data) {
 	__callback *cb = new __callback();
 	cb->function = callback;
 	cb->user_data = cb_user_data;

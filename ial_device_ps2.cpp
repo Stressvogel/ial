@@ -1,23 +1,28 @@
 /*
  * ial_device_ps2.cpp
  *
- *  Created on: Dec 10, 2021
- *      Author: Matthijs Bakker
+ * Omschrijving:	PS/2 toetsenbord driver
+ * Hoofdauteur:		Matthijs Bakker
+ *
+ * Project Stressvogel
+ * Computer Engineering
+ * Windesheim, 2021-2022
  */
 
 #include <cstdio>
 #include <system.h>
+
 #include "ial_device_ps2.h"
 
-#define SCAN_CODE_RANGE_START	0x29
+#define SCAN_CODE_RANGE_START	(0x29)
 #define SCAN_CODE_KEY_RELEASED	(0xF0 - SCAN_CODE_RANGE_START) // 0xC7
 
 // In ons computer systeem heet de PS/2 port "ps2_0"
 // terwijl hij in de Media Computer "PS2_Port" heet
 #ifdef PS2_0_NAME
-#define __PS2_PORT_NAME PS2_0_NAME
+#define __PS2_PORT_NAME		PS2_0_NAME
 #else
-#define __PS2_PORT_NAME PS2_PORT_NAME
+#define __PS2_PORT_NAME		PS2_PORT_NAME
 #endif
 
 namespace ial {
@@ -30,13 +35,12 @@ device_ps2::~device_ps2() {}
  * @inheritDoc
  **/
 void device_ps2::init() {
+	// Open het device
 	this->usb_dev = alt_up_ps2_open_dev(__PS2_PORT_NAME);
 	alt_up_ps2_init(this->usb_dev);
 
-	/**
-	 * Er blijkt een bug in de IP Core te zitten waardoor interrupts niet werken,
-	 * dus we moeten een polling based approach implementeren.
-	 */
+	// Er blijkt een bug in de IP Core te zitten waardoor interrupts
+	// niet werken. We moeten dus een polling based approach gebruiken.
 	alt_up_ps2_disable_read_interrupt(this->usb_dev);
 }
 
@@ -83,7 +87,7 @@ void device_ps2::poll() {
 /**
  * @inheritDoc
  **/
-void device_ps2::register_button_callback(uint8_t button_id, uint8_t, ial::button_cb callback, void *cb_user_data) {
+void device_ps2::register_button_callback(uint8_t button_id, uint8_t /*priority*/, ial::button_cb callback, void *cb_user_data) {
 	__callback *cb = new __callback();
 	cb->button_id = button_id;
 	cb->function = callback;
@@ -94,3 +98,4 @@ void device_ps2::register_button_callback(uint8_t button_id, uint8_t, ial::butto
 }
 
 } // namespace ial
+
